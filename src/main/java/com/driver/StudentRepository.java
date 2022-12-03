@@ -33,6 +33,7 @@ public class StudentRepository {
 
     //get student by student name
     public Student findStudentByName(String name){
+        if(name == null || name == "") return null;
         for(Student s: all_students){
             if(s.getName().equals(name)) return s;
         }
@@ -41,6 +42,7 @@ public class StudentRepository {
 
     //    get teacher by teacher name
     public Teacher findTeacherByName(String name){
+        if(name == null || name == "") return null;
         for(Teacher t: all_teachers){
             if(t.getName().equals(name)) return t;
         }
@@ -50,6 +52,9 @@ public class StudentRepository {
     public void PairStudentAndTeacher(String sname, String tname){
         Student find_student = null;
         Teacher find_teacher = null;
+
+        if(sname == null || tname == null) return;
+        if(sname == "" || tname == "") return;
 
         for(Student s: all_students){
             if(s.getName().equals(sname)) {
@@ -80,8 +85,11 @@ public class StudentRepository {
     }
     public void deleteTeacherAndItsStudents(String t_name){
         for(int i=0; i<all_students.size(); i++){
-            if(all_students.get(i).getTeacher().getName().equals(t_name))
-                all_students.remove(i);
+            Student curr = all_students.get(i);
+            if(curr.getTeacher() != null && curr.getTeacher().getName() != null && t_name != null){
+                if(curr.getTeacher().getName().equals(t_name))
+                    all_students.remove(i);
+            }
         }
         return;
     }
